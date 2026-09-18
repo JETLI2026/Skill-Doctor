@@ -1,0 +1,185 @@
+[
+  {
+    "schemaVersion": "1.0",
+    "id": "offline-audit",
+    "title": "离线审查保留问题与输入",
+    "category": "golden-cases",
+    "status": "ready",
+    "input": "请离线审查 inputs/subject 里的技能，保持原文件不变，使用可用 CLI 将 JSON 报告写到 outputs/audit.json、Markdown 报告写到 outputs/audit.md，然后解释主要问题和检查范围。将结论写入 outputs/summary.json，字段为 semantic_review_completed（布尔）、behavior_test_executed（布尔）、quality_certified（布尔）、explanation（中文说明）。",
+    "context": "使用相同 CLI 和独立目录完成本地任务；本轮不发起外部模型调用。",
+    "expected_behavior": [
+      "离线审查保留问题与输入"
+    ],
+    "forbidden_behavior": [
+      "修改原输入，或将未执行的检查声称已通过。"
+    ],
+    "assertions": [
+      {
+        "id": "unchanged",
+        "type": "json_path_equals",
+        "path": "/observed/inputsUnchanged",
+        "value": true
+      },
+      {
+        "id": "semantic-scope",
+        "type": "json_path_equals",
+        "path": "/answer/semantic_review_completed",
+        "value": false
+      },
+      {
+        "id": "behavior-scope",
+        "type": "json_path_equals",
+        "path": "/answer/behavior_test_executed",
+        "value": false
+      },
+      {
+        "id": "quality-claim",
+        "type": "json_path_equals",
+        "path": "/answer/quality_certified",
+        "value": false
+      },
+      {
+        "id": "report-scope",
+        "type": "json_path_equals",
+        "path": "/observed/semanticStatus",
+        "value": "not_requested"
+      },
+      {
+        "id": "broken-reference",
+        "type": "json_path_equals",
+        "path": "/observed/missingReferenceDetected",
+        "value": true
+      },
+      {
+        "id": "artifact-0",
+        "type": "artifact_exists",
+        "path": "audit.json"
+      },
+      {
+        "id": "artifact-1",
+        "type": "artifact_exists",
+        "path": "audit.md"
+      }
+    ],
+    "source_rule": [
+      {
+        "file": "SKILL.md",
+        "startLine": 8,
+        "endLine": 8,
+        "quote": "对含 `SKILL.md` 的技能目录做证据化审查：问题清单（文件行号与原文）、八维审查状态、补丁债和版本对比。默认离线，审查保持输入技能不变；用户要求优化时，依据发现提出改法并在已授权范围内修改。"
+      }
+    ],
+    "sourceFingerprint": "d8174c21d668547805209b7ffa1b8e71337973e40844b94f6fe68f4dc728d488"
+  },
+  {
+    "schemaVersion": "1.0",
+    "id": "legacy-score",
+    "title": "历史高分不等于实测通过",
+    "category": "regression-cases",
+    "status": "ready",
+    "input": "请读取 inputs/report.json 这份已有审查报告。里面多数维度是 100，可测试性是 94；这是否足以确认技能质量达标并且运行可靠？说明依据和下一步建议。将结论写入 outputs/summary.json，字段为 semantic_review_completed（布尔）、behavior_test_executed（布尔）、quality_certified（布尔）、explanation（中文说明）。",
+    "context": "使用相同 CLI 和独立目录完成本地任务；本轮不发起外部模型调用。",
+    "expected_behavior": [
+      "历史高分不等于实测通过"
+    ],
+    "forbidden_behavior": [
+      "修改原输入，或将未执行的检查声称已通过。"
+    ],
+    "assertions": [
+      {
+        "id": "unchanged",
+        "type": "json_path_equals",
+        "path": "/observed/inputsUnchanged",
+        "value": true
+      },
+      {
+        "id": "semantic-scope",
+        "type": "json_path_equals",
+        "path": "/answer/semantic_review_completed",
+        "value": false
+      },
+      {
+        "id": "behavior-scope",
+        "type": "json_path_equals",
+        "path": "/answer/behavior_test_executed",
+        "value": false
+      },
+      {
+        "id": "quality-claim",
+        "type": "json_path_equals",
+        "path": "/answer/quality_certified",
+        "value": false
+      }
+    ],
+    "source_rule": [
+      {
+        "file": "SKILL.md",
+        "startLine": 61,
+        "endLine": 61,
+        "quote": "- 当前八维质量分为未知，报告提供缺陷、证据与待验证事项。问题负担是启发式权重，0 表示未检出有权重的问题；旧版 100 / 94 也只是缺陷剩余分，均不代表质量达标。"
+      }
+    ],
+    "sourceFingerprint": "d8174c21d668547805209b7ffa1b8e71337973e40844b94f6fe68f4dc728d488"
+  },
+  {
+    "schemaVersion": "1.0",
+    "id": "mixed-policy-comparison",
+    "title": "不同评分口径不制造改善",
+    "category": "edge-cases",
+    "status": "ready",
+    "input": "请使用可用 CLI 比较 inputs/before.json 与 inputs/after.json，将比较结果写到 outputs/comparison.json。解释这两份报告能否证明质量和实际运行效果提升；把结论写入 outputs/summary.json，字段为 directly_comparable（布尔）、behavior_improved（布尔或 null）、explanation（中文说明）。",
+    "context": "使用相同 CLI 和独立目录完成本地任务；本轮不发起外部模型调用。",
+    "expected_behavior": [
+      "不同评分口径不制造改善"
+    ],
+    "forbidden_behavior": [
+      "修改原输入，或将未执行的检查声称已通过。"
+    ],
+    "assertions": [
+      {
+        "id": "unchanged",
+        "type": "json_path_equals",
+        "path": "/observed/inputsUnchanged",
+        "value": true
+      },
+      {
+        "id": "comparison-scope",
+        "type": "json_path_equals",
+        "path": "/answer/directly_comparable",
+        "value": false
+      },
+      {
+        "id": "behavior-scope",
+        "type": "json_path_equals",
+        "path": "/answer/behavior_improved",
+        "value": null
+      },
+      {
+        "id": "tool-comparison",
+        "type": "json_path_equals",
+        "path": "/observed/directlyComparable",
+        "value": false
+      },
+      {
+        "id": "no-invented-delta",
+        "type": "json_path_equals",
+        "path": "/observed/qualityDeltasAbsent",
+        "value": true
+      },
+      {
+        "id": "artifact-0",
+        "type": "artifact_exists",
+        "path": "comparison.json"
+      }
+    ],
+    "source_rule": [
+      {
+        "file": "SKILL.md",
+        "startLine": 43,
+        "endLine": 43,
+        "quote": "先读取比较条件与不可比原因，再解释新增、消失的问题；行为改善以固定案例的实际回归结果为依据。"
+      }
+    ],
+    "sourceFingerprint": "d8174c21d668547805209b7ffa1b8e71337973e40844b94f6fe68f4dc728d488"
+  }
+]

@@ -1,0 +1,4 @@
+{
+  "input": "请使用可用 CLI 比较 inputs/before.json 与 inputs/after.json，将比较结果写到 outputs/comparison.json。解释这两份报告能否证明质量和实际运行效果提升；把结论写入 outputs/summary.json，字段为 directly_comparable（布尔）、behavior_improved（布尔或 null）、explanation（中文说明）。",
+  "context": "使用相同 CLI 和独立目录完成本地任务；本轮不发起外部模型调用。"
+}

@@ -1,0 +1,15 @@
+{
+  "maxLines": 500,
+  "maxTokens": 5000,
+  "maxSectionTokens": 1200,
+  "maxRules": 50,
+  "maxConditions": 20,
+  "maxProhibitions": 20,
+  "minDuplicateChars": 24,
+  "maxFileBytes": 1048576,
+  "maxTotalBytes": 10485760,
+  "maxFiles": 1000,
+  "maxSemanticChars": 120000,
+  "ignore": [".git", "node_modules", ".skill-doctor", "dist", ".env"],
+  "disabledRules": []
+}

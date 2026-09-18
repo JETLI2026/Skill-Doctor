@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.1",
+  "before": {
+    "name": "skill-doctor",
+    "fingerprint": "bf22373c1df1266b1663d42d2cf3230b03541c96123fff3645682b4f7431824a"
+  },
+  "after": {
+    "name": "skill-doctor",
+    "fingerprint": "bf22373c1df1266b1663d42d2cf3230b03541c96123fff3645682b4f7431824a"
+  },
+  "beforePolicy": "legacy-remaining-points",
+  "afterPolicy": "evidence-first-v1",
+  "comparable": false,
+  "reasons": [
+    "工具版本不同",
+    "评分口径不同",
+    "旧版 100−扣分是缺陷剩余分，不能作为质量分或质量提升依据"
+  ],
+  "metricsDelta": {
+    "lines": 0,
+    "estimatedTokens": 0,
+    "ruleCount": 0,
+    "conditionCount": 0
+  },
+  "scores": [
+    {
+      "dimension": "structure_clarity",
+      "before": 100,
+      "after": null,
+      "delta": null,
+      "penaltyBefore": null,
+      "penaltyAfter": 0,
+      "penaltyDelta": null
+    },
+    {
+      "dimension": "responsibility_boundary",
+      "before": null,
+      "after": null,
+      "delta": null,
+      "penaltyBefore": null,
+      "penaltyAfter": 0,
+      "penaltyDelta": null
+    },
+    {
+      "dimension": "rule_consistency",
+      "before": 100,
+      "after": null,
+      "delta": null,
+      "penaltyBefore": null,
+      "penaltyAfter": 0,
+      "penaltyDelta": null
+    },
+    {
+      "dimension": "executability",
+      "before": 100,
+      "after": null,
+      "delta": null,
+      "penaltyBefore": null,
+      "penaltyAfter": 0,
+      "penaltyDelta": null
+    },
+    {
+      "dimension": "token_efficiency",
+      "before": 100,
+      "after": null,
+      "delta": null,
+      "penaltyBefore": null,
+      "penaltyAfter": 0,
+      "penaltyDelta": null
+    },
+    {
+      "dimension": "modularity",
+      "before": 100,
+      "after": null,
+      "delta": null,
+      "penaltyBefore": null,
+      "penaltyAfter": 0,
+      "penaltyDelta": null
+    },
+    {
+      "dimension": "exception_handling",
+      "before": null,
+      "after": null,
+      "delta": null,
+      "penaltyBefore": null,
+      "penaltyAfter": 0,
+      "penaltyDelta": null
+    },
+    {
+      "dimension": "testability",
+      "before": 94,
+      "after": null,
+      "delta": null,
+      "penaltyBefore": null,
+      "penaltyAfter": 6,
+      "penaltyDelta": null
+    }
+  ],
+  "introduced": [],
+  "resolved": [],
+  "unchangedCount": 1,
+  "interpretation": "质量分证据不足，不生成质量分差值。问题负担下降仅代表已检出的缺陷减少，不能证明行为改善；请使用同题基线和固定测试集验证。"
+}

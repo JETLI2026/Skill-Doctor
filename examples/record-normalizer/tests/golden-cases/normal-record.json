@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "id": "normal-record",
+  "title": "规范化正常记录",
+  "category": "golden-cases",
+  "status": "ready",
+  "input": "{\"sku\":\" ITEM-001 \",\"quantity\":2}",
+  "context": "输入为一个 JSON 库存记录，请按 Skill 字段契约规范化。",
+  "expected_behavior": [
+    "sku 去除两端空白，保留数量 2。"
+  ],
+  "forbidden_behavior": [
+    "保留 sku 外侧空格。"
+  ],
+  "assertions": [
+    {
+      "id": "exact-record",
+      "type": "json_equals",
+      "value": {
+        "sku": "ITEM-001",
+        "quantity": 2
+      }
+    }
+  ],
+  "source_rule": [
+    {
+      "file": "SKILL.md",
+      "startLine": 17,
+      "endLine": 17,
+      "quote": "quantity 缺失时取 1，明确提供的 0 保持为 0。sku 必须是去除两端空白后长度为 1–100 的字符串。"
+    }
+  ],
+  "sourceFingerprint": "8a8c68ea3d8b63698a6020a7f761eb176f6b1e13b2c83aed7fb714b20ad51e81"
+}

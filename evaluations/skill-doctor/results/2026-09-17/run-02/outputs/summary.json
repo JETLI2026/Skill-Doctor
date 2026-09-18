@@ -1,0 +1,6 @@
+{
+  "semantic_review_completed": false,
+  "behavior_test_executed": false,
+  "quality_certified": false,
+  "explanation": "本轮仅使用 CLI 默认离线静态 audit，未启用 --semantic 或 --live，未发起外部模型调用，也未执行技能真实任务、行为测试或回归评测。审查报告覆盖 SKILL.md 及默认静态规则：发现 1 个错误和 1 个警告。SKILL.md 第 6 行要求读取 references/fields.md，但该引用文件不存在、被忽略或不是普通文件，所需字段规范不可用；同时未发现非空测试资源。JSON 与 Markdown 报告均已生成，两次 audit 退出码均为 1，表示检查门槛未通过。报告 semantic.status 为 not_requested，各维度质量分为 null，静态缺陷证据不等于语义审查完成、行为验证通过或质量认证；总体质量仍未知。审查未改写输入技能。"
+}

@@ -1,0 +1,304 @@
+{
+  "schemaVersion": "1.1",
+  "toolVersion": "0.2.0",
+  "scoringPolicy": "evidence-first-v1",
+  "createdAt": "2026-09-16T14:58:11.772Z",
+  "skill": {
+    "name": "skill-doctor",
+    "fingerprint": "bf22373c1df1266b1663d42d2cf3230b03541c96123fff3645682b4f7431824a",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "hash": "b1e245fbf96800d40a97e880181cbceefdb3c1492dc1594173eace5e013ca4b9"
+      }
+    ]
+  },
+  "config": {
+    "maxLines": 500,
+    "maxTokens": 5000,
+    "maxSectionTokens": 1200,
+    "maxRules": 50,
+    "maxConditions": 20,
+    "maxProhibitions": 20,
+    "minDuplicateChars": 24,
+    "maxFileBytes": 1048576,
+    "maxTotalBytes": 10485760,
+    "maxFiles": 1000,
+    "maxSemanticChars": 120000,
+    "ignore": [
+      ".git",
+      "node_modules",
+      ".skill-doctor",
+      "dist",
+      ".env"
+    ],
+    "disabledRules": []
+  },
+  "metrics": {
+    "lines": 65,
+    "characters": 1969,
+    "estimatedTokens": 1240,
+    "tokenMethod": "heuristic-v1: CJK × 1.5 + other Unicode code points ÷ 4 (not tokenizer billing)",
+    "ruleCount": 6,
+    "prohibitionCount": 3,
+    "conditionCount": 0,
+    "referenceCount": 0,
+    "resourceCount": 0
+  },
+  "findings": [
+    {
+      "id": "49e06493cea74372",
+      "ruleId": "tests.missing",
+      "severity": "warning",
+      "message": "未发现非空测试资源。",
+      "recommendation": "为正常、边界与历史事故建立可验证案例。",
+      "dimensions": [
+        "testability"
+      ],
+      "evidence": [
+        {
+          "file": "SKILL.md",
+          "startLine": 1,
+          "endLine": 1,
+          "quote": "---"
+        }
+      ],
+      "origin": "static"
+    }
+  ],
+  "patches": [
+    {
+      "id": "d9361c4253df3510",
+      "source": {
+        "file": "SKILL.md",
+        "startLine": 53,
+        "endLine": 53,
+        "quote": "批量结果数百 KB 时，汇报给用户前先自己读报告、按分数与问题类型归并，不要整篇贴回对话。"
+      },
+      "signals": [
+        "prohibition"
+      ],
+      "safetySensitive": false,
+      "status": "unreviewed",
+      "action": "review",
+      "generateRegression": false,
+      "rationale": "关键词仅定位候选；尚未判断根因、分类或是否应移除。"
+    },
+    {
+      "id": "537a5278eda79e2b",
+      "source": {
+        "file": "SKILL.md",
+        "startLine": 57,
+        "endLine": 57,
+        "quote": "- 静态 `audit` 默认离线。加 `--semantic` 会调用 LLM：必须先有 `SKILL_DOCTOR_ENDPOINT`、`SKILL_DOCTOR_MODEL`、`SKILL_DOCTOR_API_KEY` 三个环境变量，未配置时不要加这个参数。"
+      },
+      "signals": [
+        "prohibition",
+        "emphasis"
+      ],
+      "safetySensitive": false,
+      "status": "unreviewed",
+      "action": "review",
+      "generateRegression": false,
+      "rationale": "关键词仅定位候选；尚未判断根因、分类或是否应移除。"
+    },
+    {
+      "id": "5fa7c976bbedc554",
+      "source": {
+        "file": "SKILL.md",
+        "startLine": 60,
+        "endLine": 60,
+        "quote": "- Token 是启发式估算（CJK × 1.5 + 其他码点 ÷ 4），不是计费值；评分是启发式检查结果，不等于真实执行成功率。给用户结论时照此说明，不要夸大成\"技能合格/不合格\"。"
+      },
+      "signals": [
+        "prohibition"
+      ],
+      "safetySensitive": false,
+      "status": "unreviewed",
+      "action": "review",
+      "generateRegression": false,
+      "rationale": "关键词仅定位候选；尚未判断根因、分类或是否应移除。"
+    }
+  ],
+  "refactors": [
+    {
+      "id": "d9361c4253df3510",
+      "originalRule": "批量结果数百 KB 时，汇报给用户前先自己读报告、按分数与问题类型归并，不要整篇贴回对话。",
+      "problem": "关键词仅定位候选；尚未判断根因、分类或是否应移除。",
+      "destination": null,
+      "newPrinciple": null,
+      "generateTest": false,
+      "action": "review",
+      "evidence": {
+        "file": "SKILL.md",
+        "startLine": 53,
+        "endLine": 53,
+        "quote": "批量结果数百 KB 时，汇报给用户前先自己读报告、按分数与问题类型归并，不要整篇贴回对话。"
+      },
+      "reviewRequired": true
+    },
+    {
+      "id": "537a5278eda79e2b",
+      "originalRule": "- 静态 `audit` 默认离线。加 `--semantic` 会调用 LLM：必须先有 `SKILL_DOCTOR_ENDPOINT`、`SKILL_DOCTOR_MODEL`、`SKILL_DOCTOR_API_KEY` 三个环境变量，未配置时不要加这个参数。",
+      "problem": "关键词仅定位候选；尚未判断根因、分类或是否应移除。",
+      "destination": null,
+      "newPrinciple": null,
+      "generateTest": false,
+      "action": "review",
+      "evidence": {
+        "file": "SKILL.md",
+        "startLine": 57,
+        "endLine": 57,
+        "quote": "- 静态 `audit` 默认离线。加 `--semantic` 会调用 LLM：必须先有 `SKILL_DOCTOR_ENDPOINT`、`SKILL_DOCTOR_MODEL`、`SKILL_DOCTOR_API_KEY` 三个环境变量，未配置时不要加这个参数。"
+      },
+      "reviewRequired": true
+    },
+    {
+      "id": "5fa7c976bbedc554",
+      "originalRule": "- Token 是启发式估算（CJK × 1.5 + 其他码点 ÷ 4），不是计费值；评分是启发式检查结果，不等于真实执行成功率。给用户结论时照此说明，不要夸大成\"技能合格/不合格\"。",
+      "problem": "关键词仅定位候选；尚未判断根因、分类或是否应移除。",
+      "destination": null,
+      "newPrinciple": null,
+      "generateTest": false,
+      "action": "review",
+      "evidence": {
+        "file": "SKILL.md",
+        "startLine": 60,
+        "endLine": 60,
+        "quote": "- Token 是启发式估算（CJK × 1.5 + 其他码点 ÷ 4），不是计费值；评分是启发式检查结果，不等于真实执行成功率。给用户结论时照此说明，不要夸大成\"技能合格/不合格\"。"
+      },
+      "reviewRequired": true
+    }
+  ],
+  "scores": [
+    {
+      "dimension": "structure_clarity",
+      "score": null,
+      "status": "partial",
+      "deductions": [],
+      "penaltyPoints": 0,
+      "findingCount": 0,
+      "missingEvidence": [
+        "语义审查未完成。",
+        "按真实任务验证步骤顺序、入口触发条件和完成标准是否清晰。",
+        "缺少经真实样本校准、同时记录达标与缺陷证据的质量评分标准。"
+      ],
+      "explanation": "仅完成静态缺陷扫描；未发现问题不代表已验证质量，质量分未知。"
+    },
+    {
+      "dimension": "responsibility_boundary",
+      "score": null,
+      "status": "not_evaluated",
+      "deductions": [],
+      "penaltyPoints": 0,
+      "findingCount": 0,
+      "missingEvidence": [
+        "语义审查未完成。",
+        "验证 Agent / Rule / Skill / Knowledge / Script 的归属适合实际调用环境。",
+        "缺少经真实样本校准、同时记录达标与缺陷证据的质量评分标准。"
+      ],
+      "explanation": "此维度尚未审查，质量分未知。"
+    },
+    {
+      "dimension": "rule_consistency",
+      "score": null,
+      "status": "partial",
+      "deductions": [],
+      "penaltyPoints": 0,
+      "findingCount": 0,
+      "missingEvidence": [
+        "语义审查未完成。",
+        "验证不同规则、适用条件和例外在真实任务中没有行为冲突。",
+        "缺少经真实样本校准、同时记录达标与缺陷证据的质量评分标准。"
+      ],
+      "explanation": "仅完成静态缺陷扫描；未发现问题不代表已验证质量，质量分未知。"
+    },
+    {
+      "dimension": "executability",
+      "score": null,
+      "status": "partial",
+      "deductions": [],
+      "penaltyPoints": 0,
+      "findingCount": 0,
+      "missingEvidence": [
+        "语义审查未完成。",
+        "在目标 Agent 中实际执行任务并核验工具调用、产物和失败路径。",
+        "缺少经真实样本校准、同时记录达标与缺陷证据的质量评分标准。"
+      ],
+      "explanation": "仅完成静态缺陷扫描；未发现问题不代表已验证质量，质量分未知。"
+    },
+    {
+      "dimension": "token_efficiency",
+      "score": null,
+      "status": "partial",
+      "deductions": [],
+      "penaltyPoints": 0,
+      "findingCount": 0,
+      "missingEvidence": [
+        "语义审查未完成。",
+        "在同题基线下证明上下文裁剪没有降低效果，并记录实际加载 Token。",
+        "缺少经真实样本校准、同时记录达标与缺陷证据的质量评分标准。"
+      ],
+      "explanation": "仅完成静态缺陷扫描；未发现问题不代表已验证质量，质量分未知。"
+    },
+    {
+      "dimension": "modularity",
+      "score": null,
+      "status": "partial",
+      "deductions": [],
+      "penaltyPoints": 0,
+      "findingCount": 0,
+      "missingEvidence": [
+        "语义审查未完成。",
+        "验证按需资料确实可被发现、正确触发和加载，模块能够独立维护。",
+        "缺少经真实样本校准、同时记录达标与缺陷证据的质量评分标准。"
+      ],
+      "explanation": "仅完成静态缺陷扫描；未发现问题不代表已验证质量，质量分未知。"
+    },
+    {
+      "dimension": "exception_handling",
+      "score": null,
+      "status": "not_evaluated",
+      "deductions": [],
+      "penaltyPoints": 0,
+      "findingCount": 0,
+      "missingEvidence": [
+        "语义审查未完成。",
+        "执行故障、边界与历史事故案例，验证恢复行为及安全约束。",
+        "缺少经真实样本校准、同时记录达标与缺陷证据的质量评分标准。"
+      ],
+      "explanation": "此维度尚未审查，质量分未知。"
+    },
+    {
+      "dimension": "testability",
+      "score": null,
+      "status": "partial",
+      "deductions": [
+        {
+          "findingId": "49e06493cea74372",
+          "points": 6,
+          "evidence": [
+            {
+              "file": "SKILL.md",
+              "startLine": 1,
+              "endLine": 1,
+              "quote": "---"
+            }
+          ]
+        }
+      ],
+      "penaltyPoints": 6,
+      "findingCount": 1,
+      "missingEvidence": [
+        "语义审查未完成。",
+        "核验断言覆盖真实需求、可捕获已知缺陷，并在固定测试集上执行回归。",
+        "缺少经真实样本校准、同时记录达标与缺陷证据的质量评分标准。"
+      ],
+      "explanation": "仅完成静态缺陷扫描；未发现问题不代表已验证质量，质量分未知。"
+    }
+  ],
+  "semantic": {
+    "status": "not_requested",
+    "reviewedFiles": []
+  }
+}

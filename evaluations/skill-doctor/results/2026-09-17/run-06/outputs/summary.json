@@ -1,0 +1,5 @@
+{
+  "directly_comparable": false,
+  "behavior_improved": null,
+  "explanation": "两份报告不能证明质量或实际运行效果提升。CLI 判定不可直接比较：工具版本从 0.1.0 变为 0.2.0，评分口径从 legacy-remaining-points 变为 evidence-first-v1；旧版 100−扣分是缺陷剩余分，不能当作质量分，新版 null 表示证据不足、质量未知，不表示退步。两份报告的 Skill 指纹相同，行数、估算 Token 和规则数未变，问题没有新增或解决，均有同一个 tests.missing 警告。两份报告都未请求语义审查，也没有真实任务执行、固定测试集回归或同题基线证据，因此行为是否改善未知，behavior_improved 为 null。需在一致条件下执行真实任务并核验产物、失败路径及回归结果后才能判断。compare 实际退出码为 1，但已写出 comparison.json；不把产物生成等同于质量达标。"
+}

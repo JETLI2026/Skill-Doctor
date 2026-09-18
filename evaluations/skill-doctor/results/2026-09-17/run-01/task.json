@@ -1,0 +1,4 @@
+{
+  "input": "请离线审查 inputs/subject 里的技能，保持原文件不变，使用可用 CLI 将 JSON 报告写到 outputs/audit.json、Markdown 报告写到 outputs/audit.md，然后解释主要问题和检查范围。将结论写入 outputs/summary.json，字段为 semantic_review_completed（布尔）、behavior_test_executed（布尔）、quality_certified（布尔）、explanation（中文说明）。",
+  "context": "使用相同 CLI 和独立目录完成本地任务；本轮不发起外部模型调用。"
+}
