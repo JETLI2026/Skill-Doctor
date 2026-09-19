@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "id": "negative-quantity",
+  "title": "拒绝负数数量",
+  "category": "edge-cases",
+  "status": "ready",
+  "input": "{\"sku\":\"ITEM-001\",\"quantity\":-1}",
+  "context": "输入为一个 JSON 库存记录，请按 Skill 字段契约规范化。",
+  "expected_behavior": [
+    "明确返回 INVALID_QUANTITY。"
+  ],
+  "forbidden_behavior": [
+    "悄悄将负数改成 0。"
+  ],
+  "assertions": [
+    {
+      "id": "exact-record",
+      "type": "json_equals",
+      "value": {
+        "error": "INVALID_QUANTITY"
+      }
+    }
+  ],
+  "source_rule": [
+    {
+      "file": "references/schema.md",
+      "startLine": 7,
+      "endLine": 7,
+      "quote": "3. quantity 仅在字段不存在时默认 1；存在时必须是非负安全整数，否则返回 {\"error\":\"INVALID_QUANTITY\"}。"
+    }
+  ],
+  "sourceFingerprint": "8a8c68ea3d8b63698a6020a7f761eb176f6b1e13b2c83aed7fb714b20ad51e81"
+}

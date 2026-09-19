@@ -1,0 +1,8 @@
+node_modules/
+.pnpm-store/
+dist/
+coverage/
+.skill-doctor/
+evaluations/skill-doctor/results/
+.env
+*.log

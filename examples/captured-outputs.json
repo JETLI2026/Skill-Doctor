@@ -1,0 +1,8 @@
+[
+  {"caseId":"normal-record","variant":"with_skill","repeat":1,"output":"{\"sku\":\"ITEM-001\",\"quantity\":2}"},
+  {"caseId":"normal-record","variant":"without_skill","repeat":1,"output":"{\"sku\":\" ITEM-001 \",\"quantity\":2}"},
+  {"caseId":"negative-quantity","variant":"with_skill","repeat":1,"output":"{\"error\":\"INVALID_QUANTITY\"}"},
+  {"caseId":"negative-quantity","variant":"without_skill","repeat":1,"output":"{\"sku\":\"ITEM-001\",\"quantity\":0}"},
+  {"caseId":"preserve-zero","variant":"with_skill","repeat":1,"output":"{\"sku\":\"ITEM-001\",\"quantity\":0}"},
+  {"caseId":"preserve-zero","variant":"without_skill","repeat":1,"output":"{\"sku\":\"ITEM-001\",\"quantity\":1}"}
+]
