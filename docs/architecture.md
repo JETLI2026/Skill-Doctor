@@ -48,7 +48,7 @@ Audit reports → policy / condition check → finding / defect-burden differenc
 
 LlmProvider 不绑定厂商 SDK。支持宿主 prepare-review / semantic-review 导入与 Chat Completions JSON object 输出，经本地结构与证据校验。文件作为审查数据与审查指令隔离，模型没有本机工具；这不等于完全解决模型提示注入。证据匹配只证明原文存在，不证明解释正确。
 
-完整体检的完成门禁是语义状态 completed 与八维 assessed 数值分。CLI 普通 audit 不指定模式时只保存静态暂评并退出 3；显式 --static 表示调用方确实只要静态扫描。已经配置/启用或由用户明确选择的模型服务视为已有数据处理授权，不逐次确认；新增或切换到未知远程地址时由宿主在发送前说明。显式离线要求优先。
+完整体检的完成门禁是语义状态 completed 与八维 assessed 数值分。对话入口在范围不明确时先让用户选择快速静态审查或完整八维审查；完整模式的静态预扫描不单独交付为评分结论。CLI 普通 audit 不指定模式时只保存静态暂评并退出 3；显式 --static 表示调用方确实只要静态扫描。已经配置/启用或由用户明确选择的模型服务视为已有数据处理授权，不逐次确认；新增或切换到未知远程地址时由宿主在发送前说明。显式离线要求优先。
 
 TaskRunner 与 RubricJudge 独立。内置文本运行器加载全量支持文本；真实 Agent 适配器负责工作区隔离、工具权限、时限和产物真实性。核心不执行任意外部命令。增加 GUI 或服务时复用 `src/index.ts`，保持 UI 与文件、模型适配层解耦。
 

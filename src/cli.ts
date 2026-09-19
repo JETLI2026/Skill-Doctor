@@ -19,7 +19,7 @@ import { compareReports, renderComparisonMarkdown } from './reporting/compare.ts
 import { diffSkills } from './refactor/diff.ts';
 import { z } from 'zod';
 
-const help = `Skill Doctor 0.3.2 — SKILL 审查、补丁债与回归评测
+const help = `Skill Doctor 0.3.3 — SKILL 审查、补丁债与回归评测
 
   audit <skill> [--static | --semantic | --semantic-review file] [--format json|md|html] [--out file]
                [--config file] [--fail-on error|warning|none]

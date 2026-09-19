@@ -12,7 +12,7 @@ export const scenarios = [
       ['report-scope', '/observed/semanticStatus', 'not_requested'],
       ['broken-reference', '/observed/missingReferenceDetected', true],
     ], artifacts: ['audit.json', 'audit.md'],
-    sourceText: '只要求静态时离线运行',
+    sourceText: '快速静态审查使用 `audit --static`',
   },
   {
     id: 'legacy-score', title: '历史高分不等于实测通过', category: 'regression-cases',
