@@ -1,6 +1,6 @@
 {
   "name": "skill-doctor",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "private": true,
   "description": "Evidence-based Skill linting, patch debt review and regression evaluation",
   "type": "module",

@@ -30,6 +30,19 @@ test('checks relative links, reference-style links, anchors and transitive reach
   assert.equal(findings.filter(f => f.ruleId === 'references.invalid').length, 2);
   assert.deepEqual(findings.filter(f => f.ruleId === 'references.orphan').map(f => f.evidence[0]!.file), ['references/orphan.md']);
 });
+test('resolves root-relative code paths from a reference file', async t => {
+  const root = await fixture(t, {
+    'SKILL.md': `${validEntry}\n[scan guide](references/guide.md)\n`,
+    'references/guide.md': '# Scan\n\nRun `scripts/desensitize_scan.py` before release.\n',
+    'scripts/desensitize_scan.py': 'print("scan")\n',
+  });
+  const skill = await parseSkill(root);
+  const guide = skill.files.find(file => file.path === 'references/guide.md')!;
+  const codePath = guide.links.find(link => link.kind === 'code-path')!;
+  assert.equal(codePath.resolved, 'scripts/desensitize_scan.py');
+  assert.equal(codePath.problem, undefined);
+  assert.ok(!lintSkill(skill).findings.some(finding => finding.ruleId === 'references.invalid'));
+});
 test('duplicate findings retain both source locations and survive line shifts', async t => {
   const paragraph = '必须验证用户提供的所有数据字段并返回具体错误原因。';
   const root = await fixture(t, { 'SKILL.md': `${validEntry}\n${paragraph}\n\n${paragraph}\n` });

@@ -9,7 +9,7 @@ import { defaultConfig } from '../config.ts';
 const dimensionMap: Record<string, Dimension[]> = {
   duplicate: ['rule_consistency', 'token_efficiency'], near_duplicate: ['rule_consistency', 'token_efficiency'], conflict: ['rule_consistency'],
   ambiguous: ['executability'], unverifiable: ['testability'], responsibility: ['responsibility_boundary'],
-  disclose_reference: ['modularity', 'token_efficiency'], extract_script: ['executability', 'responsibility_boundary'],
+  disclose_reference: ['responsibility_boundary'], extract_script: ['executability', 'responsibility_boundary'],
   external_knowledge: ['responsibility_boundary'], exception_handling: ['exception_handling'], no_op: ['token_efficiency'],
 };
 export async function reviewSemantics(skill: Skill, candidates: PatchCandidate[], provider: LlmProvider, maxChars?: number): Promise<{ findings: Finding[]; patches: PatchAnalysis[]; reviewedFiles: string[]; assessments: DesignAssessment[] }> {

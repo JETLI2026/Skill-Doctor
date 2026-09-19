@@ -35,5 +35,5 @@ export async function auditSkill(path: string, options: { config?: Partial<Confi
     patches = patches.map(p => reviewed.patches.find(r => r.id === p.id) ?? p);
     semantic = { status: 'completed', provider: reviewed.reviewer, reviewedFiles: reviewed.reviewedFiles };
   }
-  return { schemaVersion: '1.2', toolVersion: '0.3.3', scoringPolicy: 'design-review-v1', createdAt: new Date().toISOString(), skill: { name: skill.name, fingerprint: skill.fingerprint, files: skill.files.map(({ path, hash }) => ({ path, hash })) }, config, metrics, findings, patches, refactors: planRefactors(patches), checks: discoverChecks(skill), scores: scoreDimensions(findings, semantic.status === 'completed', assessments), semantic };
+  return { schemaVersion: '1.2', toolVersion: '0.3.4', scoringPolicy: 'design-review-v1', createdAt: new Date().toISOString(), skill: { name: skill.name, fingerprint: skill.fingerprint, files: skill.files.map(({ path, hash }) => ({ path, hash })) }, config, metrics, findings, patches, refactors: planRefactors(patches), checks: discoverChecks(skill), scores: scoreDimensions(findings, semantic.status === 'completed', assessments), semantic };
 }

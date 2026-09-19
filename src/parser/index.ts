@@ -59,7 +59,8 @@ export async function parseSkill(input: string, config: Config = defaultConfig):
     let cleanPath: string, anchor: string;
     try { cleanPath = decodeURIComponent(targetPath!.split('?')[0]!); anchor = decodeURIComponent(fragment.join('#')); }
     catch { link.problem = '引用包含无效 URL 编码。'; continue; }
-    const absolute = cleanPath ? resolve(root, dirname(file.path), cleanPath) : resolve(root, file.path);
+    const rootResource = link.kind === 'code-path' && /^(?:references|scripts|templates|tests|assets|agents)\//u.test(cleanPath);
+    const absolute = cleanPath ? rootResource ? resolve(root, cleanPath) : resolve(root, dirname(file.path), cleanPath) : resolve(root, file.path);
     if (!within(root, absolute) || isAbsolute(cleanPath) || /^[a-z]:/i.test(cleanPath)) { link.problem = '引用超出 Skill 根目录。'; continue; }
     link.resolved = slash(relative(root, absolute));
     link.anchor = anchor;
