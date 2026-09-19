@@ -142,7 +142,7 @@ audit 默认 `--fail-on error`，严格 CI 可用 warning，探索报告可用 n
 
 ## Agent Skill 入口
 
-[skills/skill-doctor/SKILL.md](skills/skill-doctor/SKILL.md) 是可随项目发布的通用入口：它只假设已安装的 `skill-doctor` CLI 或可定位的项目根目录，不假设某个宿主、操作系统、技能安装位置或报告目录。安装或复制到任意 Agent 宿主时，同步入口与对应工具版本，并由调用方选择可写的输出位置。
+[skills/skill-doctor/SKILL.md](skills/skill-doctor/SKILL.md) 是可随项目发布的通用入口：它只假设已安装的 `skill-doctor` CLI 或可定位的项目根目录，不假设某个宿主、操作系统、技能安装位置或报告目录。安装或复制到目标 Agent 宿主时，同步入口与对应工具版本，并由调用方选择可写的输出位置。
 
 入口默认完成静态与语义审查，按问题严重度与类型归并，并读取语义状态解释本轮检查范围。语义审查和行为评测是不同证据；已经配置且获授权的模型服务可用于语义审查，行为评测仍需单独运行。案例生成、评测协议的细节继续由本 README 和评测文档维护。
 
