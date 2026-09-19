@@ -2,7 +2,7 @@
 
 参考 [Anthropic skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md) 的同题执行、基线、独立评分流程。复用本项目 RegressionCase / Grader / Benchmark 协议；不把一份 SKILL.md 当成通用执行器。
 
-当前支持的具体流程是：控制方准备任务包，宿主独立 Agent 完成实际任务，代码从磁盘采集产物并导入 Grader。它不依赖额外的 Chat Completions endpoint，但需要宿主本身能运行 Agent 和文件工具。当前验收宿主是 Codex；WorkBuddy 需要提供等价任务执行过程，尚未实测。
+当前支持的具体流程是：控制方准备任务包，宿主独立 Agent 完成实际任务，代码从磁盘采集产物并导入 Grader。它不依赖额外的 Chat Completions endpoint，但需要宿主本身能运行 Agent 和文件工具。每个新宿主都需要提供等价任务执行、产物采集和隔离过程，并以其自身试验记录验证。
 
 ## 固定输入，再执行
 

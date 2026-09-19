@@ -2,7 +2,7 @@
 
 将历史错误转成「根因分析 → 通用原则 → 正确层级的修改 → 回归案例」，避免持续向 Prompt 追加禁令。
 
-**0.3.1** 提供模块化 TypeScript 核心库、CLI、JSON / Markdown / HTML 报告。完整体检默认包含语义审查；显式 `--static` 只做离线静态扫描。使用锁定依赖、严格类型、回归测试和 Windows / Linux CI 持续维护。
+**0.3.2** 提供模块化 TypeScript 核心库、CLI、JSON / Markdown / HTML 报告。完整体检默认包含语义审查；显式 `--static` 只做离线静态扫描。使用锁定依赖、严格类型、回归测试和 Windows / Linux CI 持续维护。
 
 **八维百分制设计审查已恢复。** 每维四项标准，记录达标与不足的原文证据；完整语义审查后八维均有分。静态结果标为暂评；行为评测单独报告，未运行不扣设计分。
 
@@ -49,14 +49,16 @@ node dist/cli.js audit ./my-skill --semantic-review .skill-doctor/review.json --
 
 如果已配置并启用 `SKILL_DOCTOR_ENDPOINT` 与 `SKILL_DOCTOR_MODEL`，可直接使用该服务做完整语义审查；配置或用户此前明确选择该服务，视为已有数据处理授权，不重复询问。新增或切换到没有既有配置/授权记录的远程地址时，发送前说明目标与发送范围。用户明确要求离线时使用宿主导入或 `--static`。
 
-静态命令无需密钥。语义分析使用支持 JSON object 输出的 Chat Completions 兼容服务；endpoint 为完整请求 URL。PowerShell 示例：
+静态命令无需密钥。语义分析使用支持 JSON object 输出的 Chat Completions 兼容服务；endpoint 为完整请求 URL。Shell 示例：
 
-```powershell
-$env:SKILL_DOCTOR_ENDPOINT = 'http://localhost:1234/v1/chat/completions'
-$env:SKILL_DOCTOR_MODEL = '你的模型标识'
+```sh
+export SKILL_DOCTOR_ENDPOINT='https://provider.example/v1/chat/completions'
+export SKILL_DOCTOR_MODEL='your-model-id'
 # 有鉴权的服务另设 SKILL_DOCTOR_API_KEY；密钥仅从环境读取
-node dist/cli.js audit ./my-skill --semantic --format md --out .skill-doctor/semantic.md
+skill-doctor audit ./my-skill --semantic --format md --out .skill-doctor/semantic.md
 ```
+
+PowerShell 使用 `$env:变量名 = '值'` 设置相同环境变量。若未全局安装 CLI，可将命令替换为 `node dist/cli.js`。
 
 `--semantic` 发送入口、references、scripts、templates、tests 及根目录脚本文本及候选规则给配置的服务，不自动寻找密钥。远程服务使用 HTTPS，本地回环服务可使用 HTTP。模型无本机工具，HTTP 有超时、响应大小限制和有限重试。
 
@@ -90,11 +92,11 @@ node dist/cli.js benchmark examples/record-normalizer --cases examples/record-no
 
 比较 with_skill、without_skill 和可选 baseline。每次请求隔离，执行器只接收 input / context 和已排除 tests 的执行资源副本；断言和期望保留给评分器。含 rubric 断言时，加 `--judge` 使用独立请求评分，也可在库中注入人工或其他模型评分器。
 
-内置 **TextTaskRunner 只生成文本，并一次性提供入口和支持文本**，不会执行 Skill 脚本或模拟真实 Agent 的文件工具，也不能评测渐进式读取效果。真实 WorkBuddy / Agent 可通过 TaskRunner 接口接入，或导入其捕获输出。没有产物时，产物断言不会通过。
+内置 **TextTaskRunner 只生成文本，并一次性提供入口和支持文本**，不会执行 Skill 脚本或模拟真实 Agent 的文件工具，也不能评测渐进式读取效果。真实宿主 Agent 可通过 TaskRunner 接口接入，或导入其捕获输出。没有产物时，产物断言不会通过。
 
-另提供 [宿主 Agent 对照评测](docs/host-evaluation.md)：准备相同任务给独立 Agent，分别使用 / 不使用 Skill，实际执行文件与 CLI 操作后采集磁盘产物，再交给现有 Grader。已提供 Skill Doctor 的三个历史场景和可重复准备、采集脚本；宿主模型服务由当前 Agent 环境提供，不需要给 CLI 另配 API key。WorkBuddy 自动执行适配仍待验证。
+另提供 [宿主 Agent 对照评测](docs/host-evaluation.md)：准备相同任务给独立 Agent，分别使用 / 不使用 Skill，实际执行文件与 CLI 操作后采集磁盘产物，再交给现有 Grader。已提供 Skill Doctor 的三个历史场景和可重复准备、采集脚本；宿主模型服务由当前 Agent 环境提供，不需要给 CLI 另配 API key。新宿主须实现等价的任务执行与产物采集过程。
 
-[首轮实测记录](docs/host-evaluation-pilot-20260917.md)：Codex / gpt-6-astra 完成 5 次执行，均通过既定关键断言；1 次因宿主用量限制未完成。两个完整对照场景未观察到 Skill 增益，总体差值不可比。本轮新增产物采集与任务包隔离测试，累计 **44 项测试、类型检查与构建通过**。
+[首轮实测记录](docs/host-evaluation-pilot-20260917.md)：一个宿主 Agent 完成 5 次执行，均通过既定关键断言；1 次因宿主用量限制未完成。两个完整对照场景未观察到 Skill 增益，总体差值不可比。本轮新增产物采集与任务包隔离测试，累计 **44 项测试、类型检查与构建通过**。
 
 报告包含通过 / 失败 / 未评估数、全集及已评估通过率、各轮通过率与总体标准差、时间 / Token、逐例回归与改善。全集通过率分母保留所有计划案例；缺少用量显示未知。任一对照存在未评估记录时，总体通过率差值为不可比。草稿、缺少输出或评分器故障不会自动通过。
 
@@ -138,11 +140,11 @@ compare 可读取 1.0/1.1/1.2。评分政策、工具版本、配置或语义状
 
 audit 默认 `--fail-on error`，严格 CI 可用 warning，探索报告可用 none。none 下的退出码 0 仍可能伴随错误级问题；语义失败保留静态报告并返回 2。文件生成成功不代表质量达标。对照组失败不使候选版本失败；候选失败优先返回 1，未评估记录仍完整保留。
 
-## WorkBuddy Skill 入口
+## Agent Skill 入口
 
-[skills/skill-doctor/SKILL.md](skills/skill-doctor/SKILL.md) 保存当前机器的入口维护版本，部署工具和报告目录沿用既有 A 盘路径。安装时同步到 `C:\Users\JetLi\.agents\skills\skill-doctor\SKILL.md`；路径属于当前环境，其他机器需调整。
+[skills/skill-doctor/SKILL.md](skills/skill-doctor/SKILL.md) 是可随项目发布的通用入口：它只假设已安装的 `skill-doctor` CLI 或可定位的项目根目录，不假设某个宿主、操作系统、技能安装位置或报告目录。安装或复制到任意 Agent 宿主时，同步入口与对应工具版本，并由调用方选择可写的输出位置。
 
-入口默认运行离线审查，按问题严重度与类型归并，并读取语义状态解释本轮检查范围。语义审查和行为评测按任务需要启用；不因模型已配置就自动调用。入口与工具应一起更新，保留旧文件备份，核对工具版本和输出口径。案例生成、评测协议的细节继续由本 README 和评测文档维护。
+入口默认完成静态与语义审查，按问题严重度与类型归并，并读取语义状态解释本轮检查范围。语义审查和行为评测是不同证据；已经配置且获授权的模型服务可用于语义审查，行为评测仍需单独运行。案例生成、评测协议的细节继续由本 README 和评测文档维护。
 
 ## 项目结构
 
@@ -165,7 +167,7 @@ examples/       有缺陷 / 改进 Skill、案例、人工输出
 evaluations/    宿主执行场景、准备与采集脚本、历史报告快照
 docs/           架构、规则、评测协议
 scripts/        工程验证
-skills/         当前环境的 Skill 入口维护版本
+skills/         可发布的通用 Skill 入口
 ```
 
 ```ts
@@ -176,7 +178,7 @@ const html = renderHtml(report);
 
 验证命令为 `pnpm check`、`pnpm test`、`pnpm build`，或 `pnpm verify`。新增规则需附可重现案例和文档。数据协议变更时同步版本与迁移说明。
 
-评分缺陷先以失败测试复现，再验证修复。2026-09-17 **40 项测试、类型检查与构建通过**：入口调优增加“配置模型仍保持离线”和“语义失败已生成报告仍返回 2”的 CLI 覆盖，并验证放宽门槛保留原问题且不改输入。Skill 通过项目解析器格式校验，编译后 JSON / Markdown / HTML 命令均已运行；详细记录见 TODO。基线评测行为未改动。实际环境是 Windows / Node 24.19；远程 CI 尚未执行。用户已接入 WorkBuddy，但这不等同于开启语义审查或执行行为回归；以报告 semantic.status 和 Benchmark 记录为准。HTML 转义和 CSP 已测试，浏览器视觉验收仍待完成。
+评分缺陷先以失败测试复现，再验证修复。2026-09-17 **40 项测试、类型检查与构建通过**：入口调优增加“配置模型仍保持离线”和“语义失败已生成报告仍返回 2”的 CLI 覆盖，并验证放宽门槛保留原问题且不改输入。Skill 通过项目解析器格式校验，编译后 JSON / Markdown / HTML 命令均已运行；详细记录见 TODO。基线评测行为未改动。远程 CI 尚未执行。已安装入口不等同于开启语义审查或执行行为回归；以报告 semantic.status 和 Benchmark 记录为准。HTML 转义和 CSP 已测试，浏览器视觉验收仍待完成。
 
 详见 [架构](docs/architecture.md)、[规则](docs/rules.md)、[评测协议](docs/evaluation.md)、[工程计划](TODO.md)、[变更记录](CHANGELOG.md)。
 
@@ -184,8 +186,12 @@ const html = renderHtml(report);
 
 类型检查、45 项测试与构建通过。编译后 prepare-review、语义导入 audit 的 JSON/Markdown/HTML、compare 均完成验收；验收使用明确标记的协议夹具，不作为真实模型效果证据。劳动仲裁技能静态复查由 7 条警告变为 4 条：移除缓存误扣和缺 tests 扣分，识别两个检查脚本候选；未改动该技能。
 
+## 0.3.2 验证记录
+
+公开入口、使用文档与评测描述已移除特定宿主和本机路径假设；默认解析忽略 `.pnpm-store`，避免项目扫描误读包管理器缓存。**48 项测试、严格类型检查、构建和编译后静态 CLI 验证通过**；部署入口与源文件哈希一致。
+
 ## 0.3.1 验证记录
 
 类型检查、46 项测试与构建通过。编译后 CLI 验证：未指定审查模式时保存静态报告并退出 3；显式 `--static` 退出 0；语义导入完成后八维均 assessed、退出 0。协议夹具只验证流程，不代表真实技能质量。
 
-WorkBuddy 部署与已安装 Skill 入口已同步。部署后复测结果与本地一致；旧版本保存在部署目录的 `.skill-doctor/backups/` 中。
+已部署的入口应与当前工具版本同步；部署前保留原有文件备份，部署后复测报告语义状态和八维完成状态。

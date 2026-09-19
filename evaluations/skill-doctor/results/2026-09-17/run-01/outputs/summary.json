@@ -1,6 +1,0 @@
-{
-  "semantic_review_completed": false,
-  "behavior_test_executed": false,
-  "quality_certified": false,
-  "explanation": "本轮使用 Skill Doctor 0.2.0 完成离线静态审查，JSON 和 Markdown 报告均已生成并读取；未调用外部模型，语义状态为 not_requested，未执行行为测试或回归。主要问题：SKILL.md 第 6 行引用 references/fields.md，报告判定该引用无效（文件不存在、已忽略或不是普通文件），属于错误级；另外未发现非空测试资源，属于警告级。建议补齐或修正字段规范引用，并建立正常、边界和历史事故案例。八维质量分均未知，静态未检出不构成达标证明，职责边界与异常处理尚未审查。两次 audit 使用 --fail-on none，退出码均为 0 仅表示命令完成，不表示技能质量达标。未执行任何输入修改操作。额外尝试以原始字节 SHA-256 对照报告哈希的检查退出码为 1，二者不一致；未核对报告哈希算法，不能据此断言输入发生变化，也不能声称该额外校验通过。"
-}

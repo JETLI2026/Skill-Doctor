@@ -52,12 +52,12 @@ LlmProvider 不绑定厂商 SDK。支持宿主 prepare-review / semantic-review 
 
 TaskRunner 与 RubricJudge 独立。内置文本运行器加载全量支持文本；真实 Agent 适配器负责工作区隔离、工具权限、时限和产物真实性。核心不执行任意外部命令。增加 GUI 或服务时复用 `src/index.ts`，保持 UI 与文件、模型适配层解耦。
 
-后续按真实样本校准信号与权重，增加 tokenizer 插件、语义分批一致性、WorkBuddy 运行器、产物隔离、盲评与基线仓库。按可重现失败推进，不提前加入空实现。
+后续按真实样本校准信号与权重，增加 tokenizer 插件、语义分批一致性、宿主运行器适配、产物隔离、盲评与基线仓库。按可重现失败推进，不提前加入空实现。
 
 ## 方法论来源
 
 - Matt Pocock 的 Writing for Agents：研究本机已安装版本的 context load、渐进披露、co-location、重复与 no-op；No-op 保留为实验假设。
 - [Anthropic skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)：参考同题基线、断言、重复运行和差异分析；本项目使用独立协议，不声称完全兼容其 evals JSON。
-- [Agent Skills specification](https://agentskills.io/specification)：参考 frontmatter 和资源分层；WorkBuddy 自定义目录仅提示，不按未经确认的平台约束报错。
+- [Agent Skills specification](https://agentskills.io/specification)：参考 frontmatter 和资源分层；自定义目录仅提示，不按未经确认的平台约束报错。
 - [mdast-util-from-markdown](https://github.com/syntax-tree/mdast-util-from-markdown)、[YAML](https://eemeli.org/yaml/)、[Zod](https://zod.dev/api)：官方 AST、YAML、校验接口。
 - [Chat Completions 协议](https://developers.openai.com/api/reference/resources/chat)：HTTP 消息、文本与可选用量字段。

@@ -45,5 +45,5 @@ for (const [index, c] of cases.entries()) {
   }
 }
 await writeFile(join(out, 'cases.json'), JSON.stringify(cases, null, 2));
-await writeFile(join(out, 'manifest.json'), JSON.stringify({ version: 1, createdAt: new Date().toISOString(), cli, cliHash: hash(await readFile(cli)), skillFingerprint: skill.fingerprint, host: 'Codex collaboration agents', model: process.argv[3] ?? 'unrecorded', repeats: 1, runs }, null, 2));
+await writeFile(join(out, 'manifest.json'), JSON.stringify({ version: 1, createdAt: new Date().toISOString(), cli, cliHash: hash(await readFile(cli)), skillFingerprint: skill.fingerprint, host: 'host agent (provided by caller)', model: process.argv[3] ?? 'unrecorded', repeats: 1, runs }, null, 2));
 console.log(JSON.stringify({ output: out, cli, runs: runs.map(({ directory, runId, variant }) => ({ directory, runId, variant })) }, null, 2));

@@ -45,6 +45,11 @@ test('fails explicitly on absent entry and resource limits', async t => {
   await writeFile(join(root, 'SKILL.md'), validEntry);
   await assert.rejects(parseSkill(root, { ...defaultConfig, maxFileBytes: 5 }), /读取限制/);
 });
+test('skips package-manager stores by default so project audits do not consume cache files', async t => {
+  const root = await fixture(t, { 'SKILL.md': validEntry, '.pnpm-store/v11/files/cache.md': '# cached package content' });
+  const skill = await parseSkill(root);
+  assert.ok(!skill.files.some(file => file.path.startsWith('.pnpm-store/')));
+});
 test('rejects invalid YAML metadata without crashing', () => {
   assert.ok(frontmatter('---\nname: a\nname: b\n---').error);
   assert.ok(frontmatter('---\n- item\n---').error);

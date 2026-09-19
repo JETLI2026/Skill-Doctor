@@ -3,5 +3,6 @@ node_modules/
 dist/
 coverage/
 .skill-doctor/
+evaluations/skill-doctor/results/
 .env
 *.log

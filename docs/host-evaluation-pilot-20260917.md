@@ -14,11 +14,11 @@
 
 ## 实验条件
 
-- 宿主：Codex 独立子 Agent；模型 gpt-6-astra，继承父任务 high 思考设置。标识来自本机任务 turn_context 元数据。
+- 宿主：一个独立 Agent；模型标识记录在本地试验清单中。该记录只用于复现条件，不代表对其他宿主的兼容性承诺。
 - 每个场景每组一次，全新任务上下文，各自输入与输出目录。两组使用同一个 Skill Doctor 0.2.0 CLI、相同任务输入与工具权限。
 - 有 Skill 组加载入口快照，无 Skill 组只使用通用能力和 CLI 帮助。执行模型没有获得预期结果、断言或来源规则；这些留给控制方。
 - 程序核对磁盘产物、关键 JSON 结论、报告字段和输入摘要。宿主未完成状态不因存在半成品而自动变为通过。
-- 未调用额外的语义审查 API；执行 Agent 本身是真实模型。未验证 WorkBuddy 宿主接口，未测任意业务 Skill 的实际执行效果。
+- 未调用额外的语义审查 API；执行 Agent 本身是真实模型。未验证其他宿主接口，未测任意业务 Skill 的实际执行效果。
 
 ## 未纳入既定断言的观察
 
@@ -32,13 +32,8 @@ run-06 在解释中报告 compare 的退出码为 1；控制方随后以 Node �
 
 后续先补齐受限任务，再扩大预先固定的业务场景与重复次数。八维百分制审查应另有明确评分标准；行为通过率作为独立证据，未运行的行为测试不直接扣写作与设计分。
 
-## 可核查记录
+## 可复现实验
 
-- [逐项 Benchmark](../evaluations/skill-doctor/results/2026-09-17/benchmark.md)
-- [案例与断言](../evaluations/skill-doctor/results/2026-09-17/cases.json)
-- [分组、输入摘要、模型及任务标识](../evaluations/skill-doctor/results/2026-09-17/manifest.json)
-- [代码采集的结果](../evaluations/skill-doctor/results/2026-09-17/captured-outputs.json)
-- [退出码独立核验](../evaluations/skill-doctor/results/2026-09-17/controller-observations.json)
-- 原始回答与实际产物保存在同目录各 run 的 outputs 中；Skill 入口快照保存为 skill-snapshot.md。
+此公开记录保留预先固定的场景、分组方式、断言范围、完成状态和结论；带本机绝对路径的原始任务目录、输入摘要与入口快照不作为版本库基线发布。要在任意宿主复验，执行 [宿主对照评测](host-evaluation.md) 中的 `prepare.mjs` 与 `collect.mjs`，将新生成的结果写入调用方指定的非版本控制目录，并记录实际宿主与模型。
 
 本轮工程验证：44 项测试、严格类型检查和构建通过。新增的四项测试覆盖实际产物读取、越界与链接拒绝、执行答案隔离、未完成任务与缺失产物不通过、输入被改动的检测。

@@ -12,7 +12,7 @@ export const configSchema = z.object({
   maxTotalBytes: z.number().int().positive().default(10 * 1024 * 1024),
   maxFiles: z.number().int().positive().default(1000),
   maxSemanticChars: z.number().int().positive().default(120000),
-  ignore: z.array(z.string().min(1)).default(['.git', 'node_modules', '.skill-doctor', 'dist', '.env']),
+  ignore: z.array(z.string().min(1)).default(['.git', 'node_modules', '.pnpm-store', '.skill-doctor', 'dist', '.env']),
   disabledRules: z.array(z.string()).default([]),
 }).strict();
 export type Config = z.infer<typeof configSchema>;

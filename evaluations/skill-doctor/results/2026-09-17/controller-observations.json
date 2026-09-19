@@ -1,7 +1,0 @@
-{
-  "kind": "controller-cli-replay-not-agent-run",
-  "nativeExitCode": 3,
-  "comparable": false,
-  "agentReportedShellExitCode": 1,
-  "note": "The agent reported exit code 1; a direct Node replay returned 3. Host shell versus native process status may explain the difference. This was not a registered benchmark assertion."
-}

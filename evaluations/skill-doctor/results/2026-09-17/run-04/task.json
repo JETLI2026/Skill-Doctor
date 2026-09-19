@@ -1,4 +1,0 @@
-{
-  "input": "请读取 inputs/report.json 这份已有审查报告。里面多数维度是 100，可测试性是 94；这是否足以确认技能质量达标并且运行可靠？说明依据和下一步建议。将结论写入 outputs/summary.json，字段为 semantic_review_completed（布尔）、behavior_test_executed（布尔）、quality_certified（布尔）、explanation（中文说明）。",
-  "context": "使用相同 CLI 和独立目录完成本地任务；本轮不发起外部模型调用。"
-}
