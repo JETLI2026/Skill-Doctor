@@ -2,7 +2,7 @@
 
 将历史错误转成「根因分析 → 通用原则 → 正确层级的修改 → 回归案例」，避免持续向 Prompt 追加禁令。
 
-**0.3.4** 提供模块化 TypeScript 核心库、CLI、JSON / Markdown / HTML 报告。对话入口会在审查范围不明确时让用户选择快速静态审查或完整八维审查；显式 `--static` 只做离线静态扫描。使用锁定依赖、严格类型、回归测试和 Windows / Linux CI 持续维护。
+**0.3.5** 提供模块化 TypeScript 核心库、CLI、JSON / Markdown / HTML 报告。对话入口会在审查范围不明确时让用户选择快速静态审查或完整八维审查；显式 `--static` 只做离线静态扫描。使用锁定依赖、严格类型、回归测试和 Windows / Linux CI 持续维护。
 
 **八维百分制设计审查已恢复。** 每维四项标准，记录达标与不足的原文证据；完整语义审查后八维均有分。静态结果标为暂评；行为评测单独报告，未运行不扣设计分。
 
@@ -142,7 +142,15 @@ audit 默认 `--fail-on error`，严格 CI 可用 warning，探索报告可用 n
 
 ## Agent Skill 入口
 
-根目录的 [SKILL.md](SKILL.md) 是 SkillHub 可发现的发布入口；它与 [skills/skill-doctor/SKILL.md](skills/skill-doctor/SKILL.md) 及其 `references/` 内容保持一致并由测试守护。入口只假设已安装的 `skill-doctor` CLI 或可定位的项目根目录，不假设某个宿主、操作系统、技能安装位置或报告目录。安装或复制到目标 Agent 宿主时，同步入口与对应工具版本，并由调用方选择可写的输出位置。
+根目录的 [SKILL.md](SKILL.md) 是工程内的通用入口；它与 [skills/skill-doctor/SKILL.md](skills/skill-doctor/SKILL.md) 及其 `references/` 内容保持一致并由测试守护。入口提供“30 秒快速体检”、有限重试与失败保留静态报告的边界说明，并通过 FAQ 按需解释首次使用问题。
+
+SkillHub 使用精简发布包，避免将源码、测试、示例和锁文件一同放入 Agent 上下文。先构建到一个尚不存在的目录：
+
+```sh
+node scripts/build-skillhub-package.mjs --out .skill-doctor/skillhub-0.3.5
+```
+
+将生成目录初始化为独立公开仓库后再从 SkillHub 导入。发布包只含入口、三个按需 reference 和运行时说明；CLI 仍从本工程或已安装版本提供。
 
 入口在范围不明确时先让用户选择快速静态审查或完整八维审查；已明确范围时直接执行。完整模式只在语义状态完成后交付八维评分，静态模式明确展示为暂评分。语义审查和行为评测是不同证据；已经配置且获授权的模型服务可用于语义审查，行为评测仍需单独运行。案例生成、评测协议的细节继续由本 README 和评测文档维护。
 
